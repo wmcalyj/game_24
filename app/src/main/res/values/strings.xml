@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">24 Game</string>
+    <string name="check_result">Check</string>
+    <string name="answer_title">Your Answer</string>
+    <string name="see_answer">Answer</string>
+    <string name="next_question">Next</string>
+    <string name="no_answer_found">No Answer Found</string>
+    <string name="invalid_char_detected">Invalid input, please enter digits and \'+\', \'-\', \'*\',
+        \'/\', \'(\' and \')\' only
+    </string>
+    <string name="BINGO">BINGO!!!</string>
+    <string name="TRY_AGAIN">Please try again</string>
+    <string name="white_space">Please do not enter any white space</string>
+    <string name="invalid_number_entered">%d is not a valid number, please try again :)</string>
+    <string name="mode">Mode</string>
+    <string name="check_user_input_answer">Check Answer</string>
+    <string name="user_input_no_answer" formatted="false">Sorry, there is no way to calculate 24
+        using %s, %s, %s, %s
+    </string>
+    <string name="FILE_NAME">24_GAME_RESULTS</string>
+    <string name="INVALID_USER_INPUT">Please enter 4 number to play the game</string>
+    <string name="USER_INPUT_LEADING_ZERO_ERROR">Please do not enter number with leading zeroes
+    </string>
+    <string name="USER_INPUT_NUMBER_TOO_LARGE_ERROR">Please enter number between 1 to 13</string>
+    <string name="settingsIncludeFaceCards">Include face cards/court cards (J, Q, K)</string>
+    <string name="SETTINGS_HEADER">Game Settings</string>
+    <string name="settings">Settings</string>
+    <string name="settingsFreeInput">Free Style</string>
+    <string name="settings_confirm">Confirm</string>
+    <string name="settings_max_num">MAX_NUM_K</string>
+    <string name="settings_free_style">SETTINGS_FREE_STYLE</string>
+    <string name="settings_include_face_cards">SETTINGS_INCLUDE_CARDS</string>
+    <string name="include_face_cards_instruction">Face cards are included: J = 11, Q = 12, K = 13
+    </string>
+    <string name="USER_INPUT_CHAR_ERROR">Please enter numbers only</string>
+    <string name="clear_user_input">Clear Input</string>
+    <string name="user_input_instruction">Instruction: Please enter four numbers between 1 to 13. I
+        will try to get 24 for you.
+    </string>
+</resources>

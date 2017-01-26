@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">算算24点</string>
+    <string name="check_result">提交</string>
+    <string name="answer_title">我的答案</string>
+    <string name="see_answer">看答案</string>
+    <string name="next_question">下一题</string>
+    <string name="no_answer_found">没有答案</string>
+    <string name="invalid_char_detected">请输入数字或者 \'+\', \'-\', \'*\', \'/\', \'(\', \')\'
+    </string>
+    <string name="BINGO">正确！！！</string>
+    <string name="TRY_AGAIN">请再试一次</string>
+    <string name="white_space">请不要输入空格或者换行</string>
+    <string name="invalid_number_entered">数字%d不在牌中，请再试一次 :)</string>
+    <string name="mode">切换模式</string>
+    <string name="check_user_input_answer">查看答案</string>
+    <string name="user_input_no_answer" formatted="false">很抱歉，%s, %s, %s, %s 无法仅通过加减乘除来算得24
+    </string>
+    <string name="INVALID_USER_INPUT">请输入4个数字</string>
+    <string name="USER_INPUT_LEADING_ZERO_ERROR">请不要输入以0开头的数字</string>
+    <string name="USER_INPUT_NUMBER_TOO_LARGE_ERROR">请输入1至13之间的数</string>
+    <string name="settingsIncludeFaceCards">包含花牌(J、Q、K)</string>
+    <string name="SETTINGS_HEADER">游戏设定</string>
+    <string name="settings">游戏设定</string>
+    <string name="settingsFreeInput">Free Style</string>
+    <string name="settings_confirm">确认</string>
+    <string name="include_face_cards_instruction">游戏包含花牌：J = 11, Q = 12, K = 13</string>
+    <string name="USER_INPUT_CHAR_ERROR">请输入一个1至13之间的数字</string>
+    <string name="clear_user_input">重新输入</string>
+    <string name="user_input_instruction">说明：请输入4个1至13之间的数，我会努力算出24的！</string>
+    <string name="settings_max_num">MAX_NUM_K</string>
+    <string name="settings_free_style">SETTINGS_FREE_STYLE</string>
+    <string name="settings_include_face_cards">SETTINGS_INCLUDE_CARDS</string>
+    <string name="FILE_NAME">24_GAME_RESULTS</string>
+</resources>
