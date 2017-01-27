@@ -61,9 +61,12 @@ public class UserInputActivity extends AppCompatActivity {
                 if (num4 != null) {
                     num4.setText("");
                 }
-
+                if (userInputResult != null) {
+                    userInputResult.setText("");
+                }
             }
         });
+
     }
 
     private void setCheckAnswerButton() {
