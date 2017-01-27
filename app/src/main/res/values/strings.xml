@@ -37,4 +37,6 @@
     <string name="user_input_instruction">Instruction: Please enter four numbers between 1 to 13. I
         will try to get 24 for you.
     </string>
+    <string name="ORIENTATION_CHANGE_NUMBERS_SAVE">ORIENTATION_CHANGE_NUMBERS_SAVE</string>
+    <string name="ORIENTATION_CHANGE_NUMBERS_RESULT">ORIENTATION_CHANGE_NUMBERS_RESULT</string>
 </resources>

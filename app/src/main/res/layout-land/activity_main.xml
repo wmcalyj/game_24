@@ -13,9 +13,11 @@
 
     <LinearLayout
         android:id="@+id/level1"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_vertical_margin">
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_toRightOf="@+id/all_buttons">
         <ImageView
             android:id="@+id/card1"
             android:layout_width="wrap_content"
@@ -49,7 +51,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@id/level1"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:text="@string/include_face_cards_instruction"
         android:textSize="12sp"
         android:visibility="gone"/>
@@ -68,46 +69,63 @@
         android:id="@+id/answerEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/answerTextView"/>
+        android:layout_alignBaseline="@id/answerTextView"
+        android:layout_toRightOf="@id/answerTextView"
+        android:textSize="18sp"/>
 
-    <Button
-        android:id="@+id/checkButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/answerEditText"
-        android:text="@string/check_result"/>
-    <Button
-        android:id="@+id/nextQuestion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/answerEditText"
-        android:layout_centerHorizontal="true"
-        android:text="@string/next_question"/>
 
-    <Button
-        android:id="@+id/seeAnswerButton"
+    <LinearLayout
+        android:id="@+id/all_buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/answerEditText"
-        android:text="@string/see_answer"/>
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/checkButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/answerEditText"
+            android:layout_weight="1"
+            android:text="@string/check_result"/>
+        <Button
+            android:id="@+id/nextQuestion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/answerEditText"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
+            android:text="@string/next_question"/>
+
+        <Button
+            android:id="@+id/seeAnswerButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/answerEditText"
+            android:layout_weight="1"
+            android:text="@string/see_answer"/>
+    </LinearLayout>
+
+
     <TextView
         android:id="@+id/resultView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/checkButton"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/answerTextView"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:maxLines="5"
         android:scrollbars="vertical"
-        android:textSize="40sp"/>
+        android:textSize="30sp"/>
     <TextView
         android:id="@+id/userResultView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/checkButton"
-        android:layout_centerHorizontal="true"
+        android:layout_alignBaseline="@id/resultView"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:textSize="40sp"/>
+        android:layout_toRightOf="@id/resultView"
+        android:layout_weight="1"
+        android:textSize="30sp"/>
 
 </RelativeLayout>

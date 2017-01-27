@@ -31,4 +31,6 @@
     <string name="settings_free_style">SETTINGS_FREE_STYLE</string>
     <string name="settings_include_face_cards">SETTINGS_INCLUDE_CARDS</string>
     <string name="FILE_NAME">24_GAME_RESULTS</string>
+    <string name="ORIENTATION_CHANGE_NUMBERS_SAVE">ORIENTATION_CHANGE_NUMBERS_SAVE</string>
+    <string name="ORIENTATION_CHANGE_NUMBERS_RESULT">ORIENTATION_CHANGE_NUMBERS_RESULT</string>
 </resources>

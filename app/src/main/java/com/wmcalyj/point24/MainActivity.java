@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
@@ -29,7 +30,12 @@ import com.wmcalyj.point24.services.ComputeResultRunnable;
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
 
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -52,15 +58,27 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        includeFaceCardsInstruction = (TextView) findViewById(R.id.includeFaceCardsInstruction);
         mContext = this;
-        loadSettings();
 
+        loadSettings();
         AssetFileService.loadPreCalculatedAnswers(mContext);
 
-        g = CalculationService.getInstance().generateGame(maxNum);
-
-        result = CalculationService.getInstance().getAllAnswers();
+        if (savedInstanceState != null) {
+            int[] nums = savedInstanceState.getIntArray(getString(R.string
+                    .ORIENTATION_CHANGE_NUMBERS_SAVE));
+            List<String> results = savedInstanceState.getStringArrayList(getString(R.string
+                    .ORIENTATION_CHANGE_NUMBERS_RESULT));
+            if (nums != null && nums.length == 4 && results != null && results.size() > 0) {
+                g = new Game(nums);
+                result = new HashSet<>(results);
+            } else {
+                g = CalculationService.getInstance().generateGame(maxNum);
+                result = CalculationService.getInstance().getAllAnswers();
+            }
+        } else {
+            g = CalculationService.getInstance().generateGame(maxNum);
+            result = CalculationService.getInstance().getAllAnswers();
+        }
         setNumberImagesAndResult(g, cardViews, result);
         nextQuestion = (Button) findViewById(R.id.nextQuestion);
         nextQuestion.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +99,11 @@ public class MainActivity extends AppCompatActivity {
                     resultView.setMovementMethod(new ScrollingMovementMethod());
                 }
                 resultView.setText(resultString);
+                if (userResultView == null) {
+                    userResultView = (TextView) findViewById(R.id.userResultView);
+                }
+                userResultView.setText("");
+
 
             }
         });
@@ -94,6 +117,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 boolean valid = evaluateUserAnswer(g.nums);
+                if (resultView == null) {
+                    resultView = (TextView) findViewById(R.id.resultView);
+                    resultView.setMovementMethod(new ScrollingMovementMethod());
+                }
+                resultView.setText("");
                 if (valid) {
                     if (userResultView == null) {
                         userResultView = (TextView) findViewById(R.id.userResultView);
@@ -109,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
     private void loadSettings() {
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
 //        isFreeStyle = sharedPref.getBoolean(getString(R.string.settings_free_style), false);
@@ -118,19 +147,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void clearAllViews() {
-        if (userResultView == null) {
-            userResultView = (TextView) findViewById(R.id.userResultView);
-        }
+//        if (userResultView == null) {
+        userResultView = (TextView) findViewById(R.id.userResultView);
+//        }
         userResultView.setText("");
-        if (editText == null) {
-            editText = (EditText) findViewById(R.id.answerEditText);
-        }
+//        if (editText == null) {
+        editText = (EditText) findViewById(R.id.answerEditText);
+//        }
         editText.setText("");
-        if (resultView == null) {
-            resultView = (TextView) findViewById(R.id.resultView);
-        }
+//        if (resultView == null) {
+        resultView = (TextView) findViewById(R.id.resultView);
+//        }
         resultView.setText("");
-
     }
 
     private boolean evaluateUserAnswer(final int[] nums) {
@@ -353,6 +381,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setInstructionsForFaceCards(boolean include) {
+        if (includeFaceCardsInstruction == null) {
+            includeFaceCardsInstruction = (TextView) findViewById(R.id.includeFaceCardsInstruction);
+        }
         includeFaceCardsInstruction.setVisibility(include ? View.VISIBLE : View.GONE);
     }
 
@@ -360,5 +391,16 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if (g != null && g.nums != null && g.nums.length == 4 && result != null && result.size()
+                > 0) {
+            outState.putIntArray(getString(R.string.ORIENTATION_CHANGE_NUMBERS_SAVE), g.nums);
+            outState.putStringArrayList(getString(R.string.ORIENTATION_CHANGE_NUMBERS_RESULT), new
+                    ArrayList<String>(result));
+        }
+        super.onSaveInstanceState(outState);
     }
 }
