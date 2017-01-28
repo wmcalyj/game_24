@@ -32,6 +32,9 @@
     <string name="settings_include_face_cards">SETTINGS_INCLUDE_CARDS</string>
     <string name="include_face_cards_instruction">Face cards are included: J = 11, Q = 12, K = 13
     </string>
+    <string name="include_face_cards_instruction_land">Face cards are included: J = 11, Q = 12, K =
+        13
+    </string>
     <string name="USER_INPUT_CHAR_ERROR">Please enter numbers only</string>
     <string name="clear_user_input">Clear Input</string>
     <string name="user_input_instruction">Instruction: Please enter four numbers between 1 to 13. I
@@ -39,4 +42,23 @@
     </string>
     <string name="ORIENTATION_CHANGE_NUMBERS_SAVE">ORIENTATION_CHANGE_NUMBERS_SAVE</string>
     <string name="ORIENTATION_CHANGE_NUMBERS_RESULT">ORIENTATION_CHANGE_NUMBERS_RESULT</string>
+    <string name="pad_num0">0</string>
+    <string name="pad_num1">1</string>
+    <string name="pad_num2">2</string>
+    <string name="pad_num3">3</string>
+    <string name="pad_num4">4</string>
+    <string name="pad_num5">5</string>
+    <string name="pad_num6">6</string>
+    <string name="pad_num7">7</string>
+    <string name="pad_num8">8</string>
+    <string name="pad_num9">9</string>
+    <string name="pad_num_plus">+</string>
+    <string name="pad_num_minus">-</string>
+    <string name="pad_num_mul">*</string>
+    <string name="pad_num_divide">/</string>
+    <string name="pad_num_left_p">(</string>
+    <string name="pad_num_right_p">)</string>
+    <string name="pad_confirm">Submit</string>
+    <string name="pad_backspace">Delete</string>
+    <string name="pad_clear">Clear</string>
 </resources>

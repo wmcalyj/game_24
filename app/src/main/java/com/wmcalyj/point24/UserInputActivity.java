@@ -2,9 +2,8 @@ package com.wmcalyj.point24;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spanned;
@@ -21,9 +20,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.wmcalyj.point24.listeners.KeypadOnTouchListener;
+import com.wmcalyj.point24.listeners.SuppressSoftKeyboardOnTouchListener;
 import com.wmcalyj.point24.services.CalculationService;
-
-import org.w3c.dom.Text;
 
 public class UserInputActivity extends AppCompatActivity {
     private static final String TAG = "UserInput";
@@ -38,6 +37,7 @@ public class UserInputActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_input);
         mContext = this;
         prepareAllFourNums();
+
         autoFocusOnNum1();
         setCheckAnswerButton();
         setClearUserInputButton();
@@ -71,29 +71,7 @@ public class UserInputActivity extends AppCompatActivity {
 
     private void setCheckAnswerButton() {
         checkUserInputAnswer = (Button) findViewById(R.id.user_input_check_answer_button);
-        checkUserInputAnswer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (userInputResult == null) {
-                    userInputResult = (TextView) findViewById(R.id.user_input_result);
-                }
-                Game g = formGame();
-                if (g == null) {
-                    Toast.makeText(mContext, getString(R.string.INVALID_USER_INPUT), Toast
-                            .LENGTH_LONG).show();
-                } else {
-                    String result = CalculationService.getInstance().getSingleResult(g);
-                    if (result == null || result.isEmpty()) {
-                        userInputResult.setGravity(Gravity.LEFT);
-                        userInputResult.setText(getString(R.string.user_input_no_answer, num1
-                                .getText(), num2.getText(), num3.getText(), num4.getText()));
-                    } else {
-                        userInputResult.setGravity(Gravity.CENTER_HORIZONTAL);
-                        userInputResult.setText(result);
-                    }
-                }
-            }
-        });
+        checkUserInputAnswer.setOnClickListener(new CheckUserInputAnswerListener());
     }
 
     private Game formGame() {
@@ -118,24 +96,28 @@ public class UserInputActivity extends AppCompatActivity {
         num1.setOnEditorActionListener(new UserInputNumOnEditorActionListener(-1, R.id
                 .user_input_num_2));
         num1.setFilters(getNumberFilters());
+        num1.setOnTouchListener(new SuppressSoftKeyboardOnTouchListener());
         num2 = (EditText) findViewById(R.id.user_input_num_2);
         num2.addTextChangedListener(new UserInputNumTextWatcher(R.id.user_input_num_1, R.id
                 .user_input_num_3));
         num2.setOnEditorActionListener(new UserInputNumOnEditorActionListener(R.id
                 .user_input_num_1, R.id.user_input_num_3));
         num2.setFilters(getNumberFilters());
+        num2.setOnTouchListener(new SuppressSoftKeyboardOnTouchListener());
         num3 = (EditText) findViewById(R.id.user_input_num_3);
         num3.addTextChangedListener(new UserInputNumTextWatcher(R.id.user_input_num_2, R.id
                 .user_input_num_4));
         num3.setOnEditorActionListener(new UserInputNumOnEditorActionListener(R.id
                 .user_input_num_2, R.id.user_input_num_4));
+        num3.setOnTouchListener(new SuppressSoftKeyboardOnTouchListener());
         num3.setFilters(getNumberFilters());
         num4 = (EditText) findViewById(R.id.user_input_num_4);
         num4.addTextChangedListener(new UserInputNumTextWatcher(R.id.user_input_num_3, -1));
         num4.setOnEditorActionListener(new UserInputNumOnEditorActionListener(R.id
                 .user_input_num_3, -1));
         num4.setFilters(getNumberFilters());
-
+        num4.setOnTouchListener(new SuppressSoftKeyboardOnTouchListener());
+        setNumberKeyboard(num1, num2, num3, num4);
     }
 
     @Override
@@ -229,6 +211,40 @@ public class UserInputActivity extends AppCompatActivity {
         return filters;
     }
 
+    private void setNumberKeyboard(EditText... editText) {
+        if (editText == null) {
+            return;
+        }
+        Button n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, plus, minus, mul, div, left, right,
+                delete, pad_confirm, clear;
+        n0 = (Button) findViewById(R.id.pad_num0);
+        n0.setOnClickListener(new KeypadOnTouchListener(mContext, editText));
+        n1 = (Button) findViewById(R.id.pad_num1);
+        n1.setOnClickListener(new KeypadOnTouchListener(mContext, editText));
+        n2 = (Button) findViewById(R.id.pad_num2);
+        n2.setOnClickListener(new KeypadOnTouchListener(mContext, editText));
+        n3 = (Button) findViewById(R.id.pad_num3);
+        n3.setOnClickListener(new KeypadOnTouchListener(mContext, editText));
+        n4 = (Button) findViewById(R.id.pad_num4);
+        n4.setOnClickListener(new KeypadOnTouchListener(mContext, editText));
+        n5 = (Button) findViewById(R.id.pad_num5);
+        n5.setOnClickListener(new KeypadOnTouchListener(mContext, editText));
+        n6 = (Button) findViewById(R.id.pad_num6);
+        n6.setOnClickListener(new KeypadOnTouchListener(mContext, editText));
+        n7 = (Button) findViewById(R.id.pad_num7);
+        n7.setOnClickListener(new KeypadOnTouchListener(mContext, editText));
+        n8 = (Button) findViewById(R.id.pad_num8);
+        n8.setOnClickListener(new KeypadOnTouchListener(mContext, editText));
+        n9 = (Button) findViewById(R.id.pad_num9);
+        n9.setOnClickListener(new KeypadOnTouchListener(mContext, editText));
+
+        pad_confirm = (Button) findViewById(R.id.pad_confirm);
+        pad_confirm.setOnClickListener(new CheckUserInputAnswerListener());
+        delete = (Button) findViewById(R.id.pad_backspace);
+        delete.setOnClickListener(new KeypadOnTouchListener(mContext, editText));
+        
+    }
+
     private class UserInputNumTextWatcher implements TextWatcher {
         int prevFocusId, nextFocusId;
 
@@ -291,6 +307,30 @@ public class UserInputActivity extends AppCompatActivity {
                 }
             }
             return false;
+        }
+    }
+
+    private class CheckUserInputAnswerListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            if (userInputResult == null) {
+                userInputResult = (TextView) findViewById(R.id.user_input_result);
+            }
+            Game g = formGame();
+            if (g == null) {
+                Toast.makeText(mContext, getString(R.string.INVALID_USER_INPUT), Toast
+                        .LENGTH_LONG).show();
+            } else {
+                String result = CalculationService.getInstance().getSingleResult(g);
+                if (result == null || result.isEmpty()) {
+                    userInputResult.setGravity(Gravity.LEFT);
+                    userInputResult.setText(getString(R.string.user_input_no_answer, num1
+                            .getText(), num2.getText(), num3.getText(), num4.getText()));
+                } else {
+                    userInputResult.setGravity(Gravity.CENTER_HORIZONTAL);
+                    userInputResult.setText(result);
+                }
+            }
         }
     }
 }

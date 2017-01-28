@@ -103,4 +103,11 @@
         android:gravity="center_horizontal"
         android:textSize="30sp"/>
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/user_input_result">
+        <include layout="@layout/numbers_no_signs"/>
+    </RelativeLayout>
+
 </RelativeLayout>

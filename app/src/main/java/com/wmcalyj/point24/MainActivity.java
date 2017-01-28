@@ -4,14 +4,11 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.PopupMenu;
+import android.support.v7.app.AppCompatActivity;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,14 +20,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.wmcalyj.point24.listeners.KeypadOnTouchListener;
+import com.wmcalyj.point24.listeners.SuppressSoftKeyboardOnTouchListener;
 import com.wmcalyj.point24.services.AssetFileService;
 import com.wmcalyj.point24.services.CalculationService;
-import com.wmcalyj.point24.services.ComputeResultRunnable;
 
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,7 +57,9 @@ public class MainActivity extends AppCompatActivity {
         mContext = this;
 
         loadSettings();
-        AssetFileService.loadPreCalculatedAnswers(mContext);
+        setInstructionsForFaceCards(includeFaceCards);
+        AssetFileService.loadPreCalculatedAnswers(getAssets(), mContext.getString(R.string
+                .FILE_NAME));
 
         if (savedInstanceState != null) {
             int[] nums = savedInstanceState.getIntArray(getString(R.string
@@ -103,40 +101,71 @@ public class MainActivity extends AppCompatActivity {
                     userResultView = (TextView) findViewById(R.id.userResultView);
                 }
                 userResultView.setText("");
-
-
             }
         });
         editText = (EditText) findViewById(R.id.answerEditText);
         editText.setFilters(getEquationFilter());
-
+        editText.setOnTouchListener(new SuppressSoftKeyboardOnTouchListener());
         userResultView = (TextView) findViewById(R.id.userResultView);
 
         checkButton = (Button) findViewById(R.id.checkButton);
-        checkButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean valid = evaluateUserAnswer(g.nums);
-                if (resultView == null) {
-                    resultView = (TextView) findViewById(R.id.resultView);
-                    resultView.setMovementMethod(new ScrollingMovementMethod());
-                }
-                resultView.setText("");
-                if (valid) {
-                    if (userResultView == null) {
-                        userResultView = (TextView) findViewById(R.id.userResultView);
-                    }
-                    userResultView.setText(R.string.BINGO);
-                } else {
-                    if (userResultView == null) {
-                        userResultView = (TextView) findViewById(R.id.userResultView);
-                    }
-                    userResultView.setText(R.string.TRY_AGAIN);
-                }
-            }
-        });
+        if (checkButton != null) {
+            checkButton.setOnClickListener(new CheckUserResultListener());
+        }
+
+        if (editText == null) {
+            editText = (EditText) findViewById(R.id.answerEditText);
+        }
+        setNumberKeyboard(editText);
     }
 
+    private void setNumberKeyboard(EditText editText) {
+        if (editText == null) {
+            return;
+        }
+        Button n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, plus, minus, mul, div, left, right,
+                delete, pad_confirm, clear;
+        n0 = (Button) findViewById(R.id.pad_num0);
+        n0.setOnClickListener(new KeypadOnTouchListener(mContext, editText));
+        n1 = (Button) findViewById(R.id.pad_num1);
+        n1.setOnClickListener(new KeypadOnTouchListener(mContext, editText));
+        n2 = (Button) findViewById(R.id.pad_num2);
+        n2.setOnClickListener(new KeypadOnTouchListener(mContext, editText));
+        n3 = (Button) findViewById(R.id.pad_num3);
+        n3.setOnClickListener(new KeypadOnTouchListener(mContext, editText));
+        n4 = (Button) findViewById(R.id.pad_num4);
+        n4.setOnClickListener(new KeypadOnTouchListener(mContext, editText));
+        n5 = (Button) findViewById(R.id.pad_num5);
+        n5.setOnClickListener(new KeypadOnTouchListener(mContext, editText));
+        n6 = (Button) findViewById(R.id.pad_num6);
+        n6.setOnClickListener(new KeypadOnTouchListener(mContext, editText));
+        n7 = (Button) findViewById(R.id.pad_num7);
+        n7.setOnClickListener(new KeypadOnTouchListener(mContext, editText));
+        n8 = (Button) findViewById(R.id.pad_num8);
+        n8.setOnClickListener(new KeypadOnTouchListener(mContext, editText));
+        n9 = (Button) findViewById(R.id.pad_num9);
+        n9.setOnClickListener(new KeypadOnTouchListener(mContext, editText));
+        plus = (Button) findViewById(R.id.pad_plus);
+        plus.setOnClickListener(new KeypadOnTouchListener(mContext, editText));
+        minus = (Button) findViewById(R.id.pad_minus);
+        minus.setOnClickListener(new KeypadOnTouchListener(mContext, editText));
+        mul = (Button) findViewById(R.id.pad_multiply);
+        mul.setOnClickListener(new KeypadOnTouchListener(mContext, editText));
+        div = (Button) findViewById(R.id.pad_divide);
+        div.setOnClickListener(new KeypadOnTouchListener(mContext, editText));
+        left = (Button) findViewById(R.id.pad_left_p);
+        left.setOnClickListener(new KeypadOnTouchListener(mContext, editText));
+        right = (Button) findViewById(R.id.pad_right_p);
+        right.setOnClickListener(new KeypadOnTouchListener(mContext, editText));
+        pad_confirm = (Button) findViewById(R.id.pad_confirm);
+        pad_confirm.setOnClickListener(new CheckUserResultListener());
+        delete = (Button) findViewById(R.id.pad_backspace);
+        delete.setOnClickListener(new KeypadOnTouchListener(mContext, editText));
+        clear = (Button) findViewById(R.id.pad_clear);
+        if (clear != null) {
+            clear.setOnClickListener(new KeypadOnTouchListener(mContext, editText));
+        }
+    }
 
     private void loadSettings() {
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
@@ -233,7 +262,6 @@ public class MainActivity extends AppCompatActivity {
         };
         return filters;
     }
-
 
     private void setNumberImagesAndResult(Game g, ImageView[] cardViews, Set<String> results) {
         setNumberImages(g.nums, cardViews);
@@ -377,6 +405,7 @@ public class MainActivity extends AppCompatActivity {
             g = CalculationService.getInstance().generateGame(maxNum);
             result = CalculationService.getInstance().getAllAnswers();
             setNumberImagesAndResult(g, cardViews, result);
+            clearAllViews();
         }
     }
 
@@ -384,7 +413,7 @@ public class MainActivity extends AppCompatActivity {
         if (includeFaceCardsInstruction == null) {
             includeFaceCardsInstruction = (TextView) findViewById(R.id.includeFaceCardsInstruction);
         }
-        includeFaceCardsInstruction.setVisibility(include ? View.VISIBLE : View.GONE);
+        includeFaceCardsInstruction.setVisibility(include ? View.VISIBLE : View.INVISIBLE);
     }
 
     @Override
@@ -402,5 +431,29 @@ public class MainActivity extends AppCompatActivity {
                     ArrayList<String>(result));
         }
         super.onSaveInstanceState(outState);
+    }
+
+
+    private class CheckUserResultListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            boolean valid = evaluateUserAnswer(g.nums);
+            if (resultView == null) {
+                resultView = (TextView) findViewById(R.id.resultView);
+                resultView.setMovementMethod(new ScrollingMovementMethod());
+            }
+            resultView.setText("");
+            if (valid) {
+                if (userResultView == null) {
+                    userResultView = (TextView) findViewById(R.id.userResultView);
+                }
+                userResultView.setText(R.string.BINGO);
+            } else {
+                if (userResultView == null) {
+                    userResultView = (TextView) findViewById(R.id.userResultView);
+                }
+                userResultView.setText(R.string.TRY_AGAIN);
+            }
+        }
     }
 }

@@ -23,7 +23,8 @@
     <string name="settings">游戏设定</string>
     <string name="settingsFreeInput">Free Style</string>
     <string name="settings_confirm">确认</string>
-    <string name="include_face_cards_instruction">游戏包含花牌：J = 11, Q = 12, K = 13</string>
+    <string name="include_face_cards_instruction">含花牌：J = 11, Q = 12, K = 13</string>
+    <string name="include_face_cards_instruction_land">含花牌：J = 11, Q = 12, K = 13</string>
     <string name="USER_INPUT_CHAR_ERROR">请输入一个1至13之间的数字</string>
     <string name="clear_user_input">重新输入</string>
     <string name="user_input_instruction">说明：请输入4个1至13之间的数，我会努力算出24的！</string>
@@ -33,4 +34,22 @@
     <string name="FILE_NAME">24_GAME_RESULTS</string>
     <string name="ORIENTATION_CHANGE_NUMBERS_SAVE">ORIENTATION_CHANGE_NUMBERS_SAVE</string>
     <string name="ORIENTATION_CHANGE_NUMBERS_RESULT">ORIENTATION_CHANGE_NUMBERS_RESULT</string>
+    <string name="pad_num0">0</string>
+    <string name="pad_num1">1</string>
+    <string name="pad_num2">2</string>
+    <string name="pad_num3">3</string>
+    <string name="pad_num4">4</string>
+    <string name="pad_num5">5</string>
+    <string name="pad_num6">6</string>
+    <string name="pad_num7">7</string>
+    <string name="pad_num8">8</string>
+    <string name="pad_num9">9</string>
+    <string name="pad_num_plus">+</string>
+    <string name="pad_num_minus">-</string>
+    <string name="pad_num_mul">*</string>
+    <string name="pad_num_divide">/</string>
+    <string name="pad_num_right_p">)</string>
+    <string name="pad_confirm">确认</string>
+    <string name="pad_backspace">删除</string>
+    <string name="pad_clear">清除</string>
 </resources>

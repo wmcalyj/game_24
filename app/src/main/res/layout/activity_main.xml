@@ -14,8 +14,7 @@
     <LinearLayout
         android:id="@+id/level1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_vertical_margin">
+        android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/card1"
             android:layout_width="wrap_content"
@@ -49,10 +48,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@id/level1"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:text="@string/include_face_cards_instruction"
         android:textSize="12sp"
-        android:visibility="gone"/>
+        android:visibility="invisible"/>
 
     <TextView
         android:id="@+id/answerTextView"
@@ -97,7 +95,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/checkButton"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:maxLines="5"
         android:scrollbars="vertical"
         android:textSize="40sp"/>
@@ -107,7 +104,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/checkButton"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:textSize="40sp"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/userResultView">
+        <include layout="@layout/numbers_with_signs"/>
+    </RelativeLayout>
 
 </RelativeLayout>
