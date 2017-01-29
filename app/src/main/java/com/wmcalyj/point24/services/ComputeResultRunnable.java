@@ -1,13 +1,11 @@
 package com.wmcalyj.point24.services;
 
 import android.content.Context;
-import android.os.AsyncTask;
-import android.util.Log;
 
 import com.wmcalyj.point24.AllGames;
 import com.wmcalyj.point24.Game;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -17,10 +15,10 @@ import java.util.Set;
  * Created by mengchaowang on 1/26/17.
  */
 
-public class ComputeResultRunnable implements Runnable {
+class ComputeResultRunnable implements Runnable {
     private static final String TAG = "ComputeResult";
-    Context mContext;
-    int maxNum;
+    private Context mContext;
+    private int maxNum;
 
     public ComputeResultRunnable(Context mContext, int maxNum) {
         this.maxNum = maxNum;
@@ -38,7 +36,7 @@ public class ComputeResultRunnable implements Runnable {
             System.out.println("All Games is empty");
             return;
         }
-        Map<Game, Set<String>> games = new HashMap<Game, Set<String>>();
+        Map<Game, Set<String>> games = new HashMap<>();
         for (int i = 1; i <= maxNum; i++) {
             for (int j = 1; j <= maxNum; j++) {
                 for (int m = 1; m <= maxNum; m++) {
@@ -49,7 +47,7 @@ public class ComputeResultRunnable implements Runnable {
                         }
                         String result = CalculationService.getInstance().getSingleResult(g.nums);
                         if (result != null && !result.isEmpty()) {
-                            games.put(g, new HashSet<String>(Arrays.asList(result)));
+                            games.put(g, new HashSet<>(Collections.singletonList(result)));
                         }
                         System.out.println(g.toString());
                     }

@@ -26,7 +26,7 @@ public class Game {
         nums = re;
     }
 
-    public Game(String s1, String s2, String s3, String s4) {
+    private Game(String s1, String s2, String s3, String s4) {
         try {
             int n1 = Integer.valueOf(s1);
             int n2 = Integer.valueOf(s2);

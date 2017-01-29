@@ -17,6 +17,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,19 +37,19 @@ import java.util.Random;
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
-    static final Double DIFF = 0.0000000001;
+    private static final Double DIFF = 0.0000000001;
     private static final String TAG = "MainActivity";
-    ImageView[] cardViews = new ImageView[4];
-    Set<String> result;
-    String resultString;
-    TextView resultView, userResultView, includeFaceCardsInstruction;
-    EditText editText;
-    Button nextQuestion, seeAnswer, checkButton;
-    Context mContext;
-    Game g;
-    int maxNum = 10;
+    private final ImageView[] cardViews = new ImageView[4];
+    private Set<String> result;
+    private String resultString;
+    private TextView resultView;
+    private TextView includeFaceCardsInstruction;
+    private EditText editText;
+    private Context mContext;
+    private Game g;
+    private int maxNum = 10;
     //    boolean isFreeStyle = false;
-    boolean includeFaceCards = false;
+    private boolean includeFaceCards = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
             result = CalculationService.getInstance().getAllAnswers();
         }
         setNumberImagesAndResult(g, cardViews, result);
-        nextQuestion = (Button) findViewById(R.id.nextQuestion);
+        Button nextQuestion = (Button) findViewById(R.id.nextQuestion);
         nextQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 clearAllViews();
             }
         });
-        seeAnswer = (Button) findViewById(R.id.seeAnswerButton);
+        Button seeAnswer = (Button) findViewById(R.id.seeAnswerButton);
         seeAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,18 +98,13 @@ public class MainActivity extends AppCompatActivity {
                     resultView.setMovementMethod(new ScrollingMovementMethod());
                 }
                 resultView.setText(resultString);
-                if (userResultView == null) {
-                    userResultView = (TextView) findViewById(R.id.userResultView);
-                }
-                userResultView.setText("");
             }
         });
         editText = (EditText) findViewById(R.id.answerEditText);
         editText.setFilters(getEquationFilter());
         editText.setOnTouchListener(new SuppressSoftKeyboardOnTouchListener());
-        userResultView = (TextView) findViewById(R.id.userResultView);
 
-        checkButton = (Button) findViewById(R.id.checkButton);
+        Button checkButton = (Button) findViewById(R.id.checkButton);
         if (checkButton != null) {
             checkButton.setOnClickListener(new CheckUserResultListener());
         }
@@ -176,10 +172,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void clearAllViews() {
-//        if (userResultView == null) {
-        userResultView = (TextView) findViewById(R.id.userResultView);
-//        }
-        userResultView.setText("");
+
 //        if (editText == null) {
         editText = (EditText) findViewById(R.id.answerEditText);
 //        }
@@ -196,14 +189,14 @@ public class MainActivity extends AppCompatActivity {
             editText.setFilters(getEquationFilter());
         }
         String userInput = editText.getText().toString();
-        if (userInput != null && !userInput.isEmpty()) {
+        if (!userInput.isEmpty()) {
             try {
                 Expression e = new ExpressionBuilder(userInput).build();
                 double result = e.evaluate();
                 if (Math.abs(result - 24) > DIFF) {
                     return false;
                 }
-                int invalidNumber = 0;
+                int invalidNumber;
                 if ((invalidNumber = checkNumber(userInput, nums)) != 0) {
                     Toast.makeText(this, getString(R.string.invalid_number_entered, invalidNumber),
                             Toast.LENGTH_LONG).show();
@@ -221,9 +214,9 @@ public class MainActivity extends AppCompatActivity {
         String[] numbersStr = userInput.split("[^\\d]");
         int count = 0;
         int[] userNums = new int[4];
-        for (int i = 0; i < numbersStr.length; i++) {
-            if (numbersStr[i] != null && numbersStr[i].length() > 0) {
-                userNums[count++] = Integer.valueOf(numbersStr[i]);
+        for (String aNumbersStr : numbersStr) {
+            if (aNumbersStr != null && aNumbersStr.length() > 0) {
+                userNums[count++] = Integer.valueOf(aNumbersStr);
             }
             if (count == 4) {
                 break;
@@ -265,11 +258,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void setNumberImagesAndResult(Game g, ImageView[] cardViews, Set<String> results) {
         setNumberImages(g.nums, cardViews);
-        set24Answer(results);
+        set24Answer();
     }
 
-    private void set24Answer(Set<String> results) {
-        results = CalculationService.getInstance().getAllAnswers();
+    private void set24Answer() {
+        Set<String> results = CalculationService.getInstance().getAllAnswers();
         if (getResources().getBoolean(R.bool.single_answer)) {
             if (results == null || results.isEmpty()) {
                 resultString = getString(R.string.no_answer_found);
@@ -330,9 +323,7 @@ public class MainActivity extends AppCompatActivity {
             }
             if (card != null) {
                 Integer resourceId = ImgResourceFinder.getInstance().findResource(card);
-                if (resourceId != null) {
-                    cardViews[i].setImageResource(resourceId);
-                }
+                cardViews[i].setImageResource(resourceId);
             }
         }
     }
@@ -341,13 +332,44 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.switch_mode) {
-            Intent intent = new Intent(this, UserInputActivity.class);
-            startActivity(intent);
-            return true;
+            displayModeChangeDialog();
         } else if (id == R.id.settings) {
             displaySettingsDialog();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void displayModeChangeDialog() {
+        final Dialog mode = new Dialog(mContext);
+        mode.setContentView(R.layout.mode_change);
+        mode.setTitle(getString(R.string.mode_title));
+        loadModeDialog(mode);
+        mode.show();
+    }
+
+    private void loadModeDialog(final Dialog mode) {
+        final RadioButton single = (RadioButton) mode.findViewById(R.id.mode_single_player);
+        final RadioButton two = (RadioButton) mode.findViewById(R.id.mode_two_players);
+        final RadioButton multi = (RadioButton) mode.findViewById(R.id.mode_multi_players);
+        final RadioButton input = (RadioButton) mode.findViewById(R.id.mode_user_input);
+        single.setChecked(true);
+        Button confirm = (Button) mode.findViewById(R.id.mode_confirm);
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (input != null && input.isChecked()) {
+                    Intent intent = new Intent(v.getContext(), UserInputActivity.class);
+                    startActivity(intent);
+                } else if (two != null && two.isChecked()) {
+                    // TODO
+                } else if (multi != null && multi.isChecked()) {
+                    //TODO
+                } else {
+                    mode.dismiss();
+                }
+            }
+        });
+
     }
 
     private void displaySettingsDialog() {
@@ -392,7 +414,7 @@ public class MainActivity extends AppCompatActivity {
 //                editor.putBoolean(getString(R.string.settings_free_style), isFreeStyle);
                 editor.putBoolean(getString(R.string.settings_include_face_cards),
                         includeFaceCards);
-                editor.commit();
+                editor.apply();
                 resetGame(includeFaceCards);
                 settings.dismiss();
             }
@@ -428,11 +450,15 @@ public class MainActivity extends AppCompatActivity {
                 > 0) {
             outState.putIntArray(getString(R.string.ORIENTATION_CHANGE_NUMBERS_SAVE), g.nums);
             outState.putStringArrayList(getString(R.string.ORIENTATION_CHANGE_NUMBERS_RESULT), new
-                    ArrayList<String>(result));
+                    ArrayList<>(result));
         }
         super.onSaveInstanceState(outState);
     }
 
+    @Override
+    public void onBackPressed() {
+        this.finishAffinity();
+    }
 
     private class CheckUserResultListener implements View.OnClickListener {
         @Override
@@ -442,17 +468,10 @@ public class MainActivity extends AppCompatActivity {
                 resultView = (TextView) findViewById(R.id.resultView);
                 resultView.setMovementMethod(new ScrollingMovementMethod());
             }
-            resultView.setText("");
             if (valid) {
-                if (userResultView == null) {
-                    userResultView = (TextView) findViewById(R.id.userResultView);
-                }
-                userResultView.setText(R.string.BINGO);
+                resultView.setText(R.string.BINGO);
             } else {
-                if (userResultView == null) {
-                    userResultView = (TextView) findViewById(R.id.userResultView);
-                }
-                userResultView.setText(R.string.TRY_AGAIN);
+                resultView.setText(R.string.TRY_AGAIN);
             }
         }
     }

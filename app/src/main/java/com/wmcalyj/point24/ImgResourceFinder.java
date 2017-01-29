@@ -7,7 +7,7 @@ import java.util.Map;
  * Created by mengchaowang on 1/21/17.
  */
 public class ImgResourceFinder {
-    private static ImgResourceFinder ourInstance = new ImgResourceFinder();
+    private static final ImgResourceFinder ourInstance = new ImgResourceFinder();
     private Map<String, Integer> resourceFinder;
 
     private ImgResourceFinder() {

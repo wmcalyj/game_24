@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">24 Game</string>
     <string name="check_result">Check</string>
-    <string name="answer_title">Your Answer</string>
     <string name="see_answer">Answer</string>
     <string name="next_question">Next</string>
     <string name="no_answer_found">No Answer Found</string>
@@ -14,8 +13,8 @@
     <string name="invalid_number_entered">%d is not a valid number, please try again :)</string>
     <string name="mode">Mode</string>
     <string name="check_user_input_answer">Check Answer</string>
-    <string name="user_input_no_answer" formatted="false">Sorry, there is no way to calculate 24
-        using %s, %s, %s, %s
+    <string name="user_input_no_answer">Sorry, there is no way to calculate 24
+        using %1$s, %2$s, %3$s, %4$s
     </string>
     <string name="FILE_NAME">24_GAME_RESULTS</string>
     <string name="INVALID_USER_INPUT">Please enter 4 number to play the game</string>
@@ -25,16 +24,16 @@
     <string name="settingsIncludeFaceCards">Include face cards/court cards (J, Q, K)</string>
     <string name="SETTINGS_HEADER">Game Settings</string>
     <string name="settings">Settings</string>
-    <string name="settingsFreeInput">Free Style</string>
+    <!--<string name="settingsFreeInput">Free Style</string>-->
     <string name="settings_confirm">Confirm</string>
     <string name="settings_max_num">MAX_NUM_K</string>
-    <string name="settings_free_style">SETTINGS_FREE_STYLE</string>
+    <!--<string name="settings_free_style">SETTINGS_FREE_STYLE</string>-->
     <string name="settings_include_face_cards">SETTINGS_INCLUDE_CARDS</string>
     <string name="include_face_cards_instruction">Face cards are included: J = 11, Q = 12, K = 13
     </string>
-    <string name="include_face_cards_instruction_land">Face cards are included: J = 11, Q = 12, K =
-        13
-    </string>
+    <!--<string name="include_face_cards_instruction_land">Face cards are included: J = 11, Q = 12, K =-->
+    <!--13-->
+    <!--</string>-->
     <string name="USER_INPUT_CHAR_ERROR">Please enter numbers only</string>
     <string name="clear_user_input">Clear Input</string>
     <string name="user_input_instruction">Instruction: Please enter four numbers between 1 to 13. I
@@ -61,4 +60,19 @@
     <string name="pad_confirm">Submit</string>
     <string name="pad_backspace">Delete</string>
     <string name="pad_clear">Clear</string>
+    <string name="mode_single_player">Single Player</string>
+    <string name="mode_two_players">Two Players</string>
+    <string name="mode_multi_players">Multiple Players</string>
+    <string name="mode_user_input">User Input</string>
+    <string name="mode_confirm">Confirm</string>
+    <string name="mode_title">Mode Selection</string>
+    <string name="img_card1_content_description">First Number</string>
+    <string name="img_card2_content_description">Second Number</string>
+    <string name="img_card3_content_description">Third Number</string>
+    <string name="img_card4_content_description">Fourth Number</string>
+    <string name="user_input_first_number">First entered number</string>
+    <string name="user_input_second_number">Second entered number</string>
+    <string name="user_input_third_number">Third entered number</string>
+    <string name="user_input_fourth_number">Fourth entered number</string>
+    <string name="answer_edit_text_hint">Type your solution here</string>
 </resources>

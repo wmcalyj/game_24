@@ -3,7 +3,7 @@ package com.wmcalyj.point24.services;
 import com.wmcalyj.point24.AllGames;
 import com.wmcalyj.point24.Game;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -15,7 +15,7 @@ public class CalculationService {
     private static Random random;
     private static CalculationService instance;
     private static Set<String> answers;
-    private static Double DIFF = Math.pow(10, -9);
+    private static final Double DIFF = Math.pow(10, -9);
 
     private CalculationService() {
         random = new Random();
@@ -44,9 +44,9 @@ public class CalculationService {
 
     }
 
-    private static Set<String> getFormedEqutions(int[] nums) {
-        Set<String> re = new HashSet<String>();
-        Set<Integer> used = new HashSet<Integer>();
+    private static Set<String> getFormedEquations(int[] nums) {
+        Set<String> re = new HashSet<>();
+        Set<Integer> used = new HashSet<>();
         for (int i = 0; i < 4; i++) {
             used.add(i);
             formNextNumber(nums, i, String.valueOf(nums[i]), used, re);
@@ -75,19 +75,21 @@ public class CalculationService {
         }
     }
 
-    public Set<String> getResult(int[] nums) {
-        Set<String> formedEqutions = getFormedEqutions(nums);
-        Set<String> results = new HashSet<>();
-        for (String equ : formedEqutions) {
-            Map<String, Double> allResults = computeAllResults(equ);
-            filterOutResult(results, allResults, equ);
-        }
-        return results;
-    }
+// --Commented out by Inspection START (1/29/17, 11:41 PM):
+//    public Set<String> getResult(int[] nums) {
+//        Set<String> formedEquations = getFormedEquations(nums);
+//        Set<String> results = new HashSet<>();
+//        for (String equ : formedEquations) {
+//            Map<String, Double> allResults = computeAllResults(equ);
+//            filterOutResult(results, allResults, equ);
+//        }
+//        return results;
+//    }
+// --Commented out by Inspection STOP (1/29/17, 11:41 PM)
 
 
-    public Map<String, Double> computeAllResults(String input) {
-        Map<String, Double> re = new HashMap<String, Double>();
+    private Map<String, Double> computeAllResults(String input) {
+        Map<String, Double> re = new HashMap<>();
         for (int j = input.length(), i = j - 1; i >= 0; i--) {
             char c = input.charAt(i);
             Map<String, Double> leftList, rightList;
@@ -164,7 +166,7 @@ public class CalculationService {
                 for (int i = 0; i < 4; i++) {
                     re[i] = random.nextInt(k) + 1; // [1-k]
                 }
-                results = new HashSet<String>(Arrays.asList(getSingleResult(re)));
+                results = new HashSet<>(Collections.singletonList(getSingleResult(re)));
             } while (!solvableValues(results));
             Game g = new Game(re[0], re[1], re[2], re[3]);
             answers = results;
@@ -173,7 +175,7 @@ public class CalculationService {
         }
     }
 
-    public Game generatePreCalculatedAnswerNumber(int k) {
+    private Game generatePreCalculatedAnswerNumber(int k) {
         int[] nums = new int[4];
         Game g = null;
         Set<String> re = null;
@@ -189,8 +191,8 @@ public class CalculationService {
     }
 
     public String getSingleResult(int[] nums) {
-        Set<String> formedEqutions = getFormedEqutions(nums);
-        for (String equ : formedEqutions) {
+        Set<String> formedEquations = getFormedEquations(nums);
+        for (String equ : formedEquations) {
             Map<String, Double> allResults = computeAllResults(equ);
             for (Entry<String, Double> result : allResults.entrySet()) {
                 if (Math.abs(result.getValue() - 24) <= DIFF) {

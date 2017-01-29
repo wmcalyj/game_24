@@ -33,7 +33,7 @@ public class FileService {
         return instance;
     }
 
-    public boolean saveAllGameResults(Context context) {
+    public void saveAllGameResults(Context context) {
         try (FileOutputStream fos = context.openFileOutput(context.getString(R.string.FILE_NAME),
                 Context.MODE_PRIVATE)) {
             String resultString = AllGames.getInstance().toGsonString();
@@ -41,9 +41,7 @@ public class FileService {
             fos.write(resultString.getBytes());
         } catch (IOException e) {
             Log.e(MyTag, e.getMessage());
-            return false;
         }
-        return true;
     }
 
 
@@ -54,8 +52,7 @@ public class FileService {
             String jsonString = gson.toJson(gson.fromJson(reader, JsonElement
                     .class));
             Log.d(MyTag, "Reading json string: " + jsonString);
-            AllGames allGames = gson.fromJson(jsonString, AllGames.class);
-            return allGames;
+            return gson.fromJson(jsonString, AllGames.class);
         } catch (Exception e) {
             Log.e(MyTag, e.getMessage());
         }

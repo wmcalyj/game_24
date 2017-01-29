@@ -1,12 +1,8 @@
 package com.wmcalyj.point24;
 
-import android.content.Context;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.wmcalyj.point24.services.FileService;
 
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -37,12 +33,14 @@ public class AllGames {
         ourInstance = instance;
     }
 
-    private static void loadAllGame(Context context) {
-        ourInstance = FileService.getInstance().loadAllGameResults(context);
-        if (ourInstance == null) {
-            ourInstance = new AllGames();
-        }
-    }
+// --Commented out by Inspection START (1/29/17, 11:41 PM):
+//    private static void loadAllGame(Context context) {
+//        ourInstance = FileService.getInstance().loadAllGameResults(context);
+//        if (ourInstance == null) {
+//            ourInstance = new AllGames();
+//        }
+//    }
+// --Commented out by Inspection STOP (1/29/17, 11:41 PM)
 
     public String toGsonString() {
         return gson.toJson(ourInstance);

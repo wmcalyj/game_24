@@ -16,7 +16,7 @@ import java.io.InputStreamReader;
  */
 public class AssetFileService {
     private static final String TAG = "AssetFileService";
-    private static AssetFileService ourInstance = new AssetFileService();
+    private static final AssetFileService ourInstance = new AssetFileService();
     private static AssetManager assetManager;
     private static String FILE_NAME;
 
@@ -24,13 +24,12 @@ public class AssetFileService {
 
     }
 
-    public static AssetFileService loadPreCalculatedAnswers(AssetManager am, String file) {
+    public static void loadPreCalculatedAnswers(AssetManager am, String file) {
         assetManager = am;
         FILE_NAME = file;
         if (AllGames.getInstance().isEmpty()) {
             loadAllGames();
         }
-        return ourInstance;
     }
 
     private static void loadAllGames() {

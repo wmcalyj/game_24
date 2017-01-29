@@ -1,5 +1,6 @@
 package com.wmcalyj.point24;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,10 +28,12 @@ import com.wmcalyj.point24.services.CalculationService;
 
 public class UserInputActivity extends AppCompatActivity {
     private static final String TAG = "UserInput";
-    EditText num1, num2, num3, num4;
-    Button checkUserInputAnswer, clearUserInput;
-    TextView userInputResult;
-    Context mContext;
+    private EditText num1;
+    private EditText num2;
+    private EditText num3;
+    private EditText num4;
+    private TextView userInputResult;
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +48,7 @@ public class UserInputActivity extends AppCompatActivity {
     }
 
     private void setClearUserInputButton() {
-        clearUserInput = (Button) findViewById(R.id.user_input_clear);
+        Button clearUserInput = (Button) findViewById(R.id.user_input_clear);
         clearUserInput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,7 +74,7 @@ public class UserInputActivity extends AppCompatActivity {
     }
 
     private void setCheckAnswerButton() {
-        checkUserInputAnswer = (Button) findViewById(R.id.user_input_check_answer_button);
+        Button checkUserInputAnswer = (Button) findViewById(R.id.user_input_check_answer_button);
         checkUserInputAnswer.setOnClickListener(new CheckUserInputAnswerListener());
     }
 
@@ -124,11 +128,46 @@ public class UserInputActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.switch_mode) {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            return true;
+            displayModeChangeDialog();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void displayModeChangeDialog() {
+        final Dialog mode = new Dialog(mContext);
+        mode.setContentView(R.layout.mode_change);
+        mode.setTitle(getString(R.string.mode_title));
+        loadModeDialog(mode);
+        mode.show();
+    }
+
+    private void loadModeDialog(final Dialog mode) {
+        final RadioButton single = (RadioButton) mode.findViewById(R.id.mode_single_player);
+        final RadioButton two = (RadioButton) mode.findViewById(R.id.mode_two_players);
+        final RadioButton multi = (RadioButton) mode.findViewById(R.id.mode_multi_players);
+        final RadioButton input = (RadioButton) mode.findViewById(R.id.mode_user_input);
+        input.setChecked(true);
+        Button confirm = (Button) mode.findViewById(R.id.mode_confirm);
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (single != null && single.isChecked()) {
+                    Intent intent = new Intent(v.getContext(), MainActivity.class);
+                    startActivity(intent);
+                } else if (two != null && two.isChecked()) {
+                    // TODO
+                } else if (multi != null && multi.isChecked()) {
+                    // TODO
+                } else {
+                    mode.dismiss();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        this.finishAffinity();
     }
 
     @Override
@@ -139,7 +178,7 @@ public class UserInputActivity extends AppCompatActivity {
         return true;
     }
 
-    InputFilter[] getNumberFilters() {
+    private InputFilter[] getNumberFilters() {
         InputFilter[] filters = new InputFilter[1];
 
         filters[0] = new InputFilter() {
@@ -215,8 +254,7 @@ public class UserInputActivity extends AppCompatActivity {
         if (editText == null) {
             return;
         }
-        Button n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, plus, minus, mul, div, left, right,
-                delete, pad_confirm, clear;
+        Button n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, delete, pad_confirm;
         n0 = (Button) findViewById(R.id.pad_num0);
         n0.setOnClickListener(new KeypadOnTouchListener(mContext, editText));
         n1 = (Button) findViewById(R.id.pad_num1);
@@ -242,14 +280,15 @@ public class UserInputActivity extends AppCompatActivity {
         pad_confirm.setOnClickListener(new CheckUserInputAnswerListener());
         delete = (Button) findViewById(R.id.pad_backspace);
         delete.setOnClickListener(new KeypadOnTouchListener(mContext, editText));
-        
+
     }
 
     private class UserInputNumTextWatcher implements TextWatcher {
-        int prevFocusId, nextFocusId;
+        // --Commented out by Inspection (1/30/17, 12:08 AM):final int prevFocusId;
+        final int nextFocusId;
 
         public UserInputNumTextWatcher(int prevFocusId, int nextFocusId) {
-            this.prevFocusId = prevFocusId;
+//            this.prevFocusId = prevFocusId;
             this.nextFocusId = nextFocusId;
         }
 
@@ -281,7 +320,8 @@ public class UserInputActivity extends AppCompatActivity {
     }
 
     private class UserInputNumOnEditorActionListener implements TextView.OnEditorActionListener {
-        int prevFocusId, nextFocusId;
+        final int prevFocusId;
+        final int nextFocusId;
 
         public UserInputNumOnEditorActionListener(int prevFocusId, int nextFocusId) {
             this.prevFocusId = prevFocusId;
@@ -323,7 +363,7 @@ public class UserInputActivity extends AppCompatActivity {
             } else {
                 String result = CalculationService.getInstance().getSingleResult(g);
                 if (result == null || result.isEmpty()) {
-                    userInputResult.setGravity(Gravity.LEFT);
+                    userInputResult.setGravity(Gravity.START);
                     userInputResult.setText(getString(R.string.user_input_no_answer, num1
                             .getText(), num2.getText(), num3.getText(), num4.getText()));
                 } else {

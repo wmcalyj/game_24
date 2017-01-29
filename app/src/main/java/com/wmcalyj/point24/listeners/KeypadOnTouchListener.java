@@ -11,8 +11,8 @@ import com.wmcalyj.point24.R;
  * Created by mengchaowang on 1/28/17.
  */
 public class KeypadOnTouchListener implements View.OnClickListener {
-    private EditText[] editTexts;
-    private Context mContext;
+    private final EditText[] editTexts;
+    private final Context mContext;
 
     public KeypadOnTouchListener(Context context, EditText... editable) {
         editTexts = editable;
