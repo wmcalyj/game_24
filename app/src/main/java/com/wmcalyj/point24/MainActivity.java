@@ -31,6 +31,7 @@ import net.objecthunter.exp4j.ExpressionBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.EmptyStackException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -203,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
                     return false;
                 }
                 return true;
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | EmptyStackException e) {
                 return false;
             }
         }

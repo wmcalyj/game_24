@@ -22,16 +22,24 @@ public class KeypadOnTouchListener implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        Button b = (Button) v;
+        CharSequence buttonString = b.getText();
+        if (buttonString.equals(mContext.getString(R.string.pad_clear))) {
+            for (int i = 0; i < editTexts.length; i++) {
+                EditText myEditText = editTexts[i];
+                if (myEditText != null) {
+                    myEditText.setText("");
+                }
+            }
+            return;
+        }
+
         for (int i = 0; i < editTexts.length; i++) {
             EditText myEditText = editTexts[i];
             if (myEditText != null && myEditText.isFocused()) {
-                Button b = (Button) v;
-                CharSequence buttonString = b.getText();
                 int currentPosStart = myEditText.getSelectionStart();
                 int currentPosEnd = myEditText.getSelectionEnd();
-                if (buttonString.equals(mContext.getString(R.string.pad_clear))) {
-                    myEditText.setText("");
-                } else if (buttonString.equals(mContext.getString(R.string.pad_backspace))) {
+                if (buttonString.equals(mContext.getString(R.string.pad_backspace))) {
                     if (myEditText.length() > 0) {
                         if (currentPosStart == currentPosEnd) {
                             myEditText.getText().replace(currentPosStart - 1, currentPosEnd, "");

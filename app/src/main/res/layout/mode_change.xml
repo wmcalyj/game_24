@@ -23,13 +23,15 @@
             android:id="@+id/mode_two_players"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/mode_two_players"/>
+            android:text="@string/mode_two_players"
+            android:visibility="gone"/>
 
         <RadioButton
             android:id="@+id/mode_multi_players"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/mode_multi_players"/>
+            android:text="@string/mode_multi_players"
+            android:visibility="gone"/>
 
         <RadioButton
             android:id="@+id/mode_user_input"

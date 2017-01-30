@@ -93,16 +93,21 @@
         android:id="@+id/user_input_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/user_input_keypad"
         android:layout_below="@id/user_input_check_answer_button"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:gravity="center_horizontal"
+        android:gravity="center"
+        android:maxLines="3"
+        android:scrollbars="vertical"
         android:textSize="30sp"/>
 
     <RelativeLayout
+        android:id="@+id/user_input_keypad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/user_input_result">
-        <include layout="@layout/numbers_with_signs"/>
+        android:layout_alignParentBottom="true">
+        <include layout="@layout/numbers_no_signs"/>
     </RelativeLayout>
 
 </RelativeLayout>
