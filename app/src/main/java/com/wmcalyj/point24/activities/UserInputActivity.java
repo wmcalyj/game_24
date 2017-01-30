@@ -1,4 +1,4 @@
-package com.wmcalyj.point24;
+package com.wmcalyj.point24.activities;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -22,6 +22,8 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.wmcalyj.point24.objects.Game;
+import com.wmcalyj.point24.R;
 import com.wmcalyj.point24.listeners.KeypadOnTouchListener;
 import com.wmcalyj.point24.listeners.SuppressSoftKeyboardOnTouchListener;
 import com.wmcalyj.point24.services.CalculationService;

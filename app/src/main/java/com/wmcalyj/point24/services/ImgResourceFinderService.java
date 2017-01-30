@@ -1,4 +1,6 @@
-package com.wmcalyj.point24;
+package com.wmcalyj.point24.services;
+
+import com.wmcalyj.point24.R;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,11 +8,11 @@ import java.util.Map;
 /**
  * Created by mengchaowang on 1/21/17.
  */
-public class ImgResourceFinder {
-    private static final ImgResourceFinder ourInstance = new ImgResourceFinder();
+public class ImgResourceFinderService {
+    private static final ImgResourceFinderService ourInstance = new ImgResourceFinderService();
     private Map<String, Integer> resourceFinder;
 
-    private ImgResourceFinder() {
+    private ImgResourceFinderService() {
         if (resourceFinder == null) {
             resourceFinder = new HashMap<>();
         }
@@ -68,7 +70,7 @@ public class ImgResourceFinder {
         resourceFinder.put("h13", R.drawable.h13);
     }
 
-    public static ImgResourceFinder getInstance() {
+    public static ImgResourceFinderService getInstance() {
         return ourInstance;
     }
 

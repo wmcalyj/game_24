@@ -1,4 +1,4 @@
-package com.wmcalyj.point24;
+package com.wmcalyj.point24.objects;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

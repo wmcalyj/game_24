@@ -5,7 +5,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import com.wmcalyj.point24.AllGames;
+import com.wmcalyj.point24.objects.AllGames;
 import com.wmcalyj.point24.R;
 
 import java.io.BufferedReader;

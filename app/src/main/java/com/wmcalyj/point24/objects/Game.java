@@ -1,4 +1,4 @@
-package com.wmcalyj.point24;
+package com.wmcalyj.point24.objects;
 
 import java.util.Arrays;
 

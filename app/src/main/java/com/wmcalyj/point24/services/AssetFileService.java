@@ -4,7 +4,7 @@ import android.content.res.AssetManager;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import com.wmcalyj.point24.AllGames;
+import com.wmcalyj.point24.objects.AllGames;
 
 import java.io.BufferedReader;
 import java.io.IOException;

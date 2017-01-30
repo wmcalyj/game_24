@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.wmcalyj.point24.UserInputActivity">
+    tools:context="com.wmcalyj.point24.activities.UserInputActivity">
 
     <TextView
         android:id="@+id/user_input_instruction"

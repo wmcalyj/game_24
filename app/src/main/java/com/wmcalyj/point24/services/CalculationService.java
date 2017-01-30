@@ -1,7 +1,7 @@
 package com.wmcalyj.point24.services;
 
-import com.wmcalyj.point24.AllGames;
-import com.wmcalyj.point24.Game;
+import com.wmcalyj.point24.objects.AllGames;
+import com.wmcalyj.point24.objects.Game;
 
 import java.util.Collections;
 import java.util.HashMap;
